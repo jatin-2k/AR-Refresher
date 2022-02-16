@@ -13,7 +13,6 @@ public class ColorCorrectionManager : MonoBehaviour
     public ARCameraManager ARCamera;
     public Light directionalLight;
     public UnityEngine.UI.Image image;
-    public TMPro.TMP_Text screenText2;
 
     // Start is called before the first frame update
     void Start()
@@ -24,16 +23,14 @@ public class ColorCorrectionManager : MonoBehaviour
             averageColorTemperature = (float)args.lightEstimation.averageColorTemperature;
             colorCorrection = (Color)args.lightEstimation.colorCorrection;
         };
+
+        directionalLight.useColorTemperature = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(colorCorrection != null)
-        {
-            //screenText2.text += "\n";
-            //screenText2.text += colorCorrection + " " + averageBrightness + " " + averageColorTemperature;
-            image.color = new Color(colorCorrection.r, colorCorrection.g, colorCorrection.b, averageBrightness);
-        }
+        directionalLight.intensity = averageBrightness;
+        directionalLight.colorTemperature = averageColorTemperature;
     }
 }
